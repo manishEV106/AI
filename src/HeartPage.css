@@ -1,0 +1,356 @@
+.anatomical-heart {
+    width: 350px;
+    height: 350px;
+    filter: drop-shadow(0 0 30px rgba(220, 20, 60, 0.6));
+    animation: heartbeat 0.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    position: relative;
+    z-index: 2
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 30px rgba(220, 20, 60, 0.6))
+    }
+
+    10% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 50px rgba(220, 20, 60, 0.9))
+    }
+
+    20% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 30px rgba(220, 20, 60, 0.6))
+    }
+
+    30% {
+        transform: scale(1.04);
+        filter: drop-shadow(0 0 40px rgba(220, 20, 60, 0.8))
+    }
+
+    40%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 30px rgba(220, 20, 60, 0.6))
+    }
+}
+
+.heart-main {
+    transform-origin: center
+}
+
+.heart-atrium {
+    animation: atriumPulse 0.8s ease-in-out infinite
+}
+
+@keyframes atriumPulse {
+
+    0%,
+    40%,
+    100% {
+        transform: scale(1)
+    }
+
+    10% {
+        transform: scale(1.1)
+    }
+
+    30% {
+        transform: scale(1.05)
+    }
+}
+
+.heart-vessel {
+    animation: vesselPulse 0.8s ease-in-out infinite
+}
+
+@keyframes vesselPulse {
+
+    0%,
+    40%,
+    100% {
+        opacity: 1
+    }
+
+    10%,
+    30% {
+        opacity: 0.7
+    }
+}
+
+.particle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(255, 107, 107, 0.8) 0%, rgba(220, 20, 60, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1
+}
+
+.particle-1 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand1 0.8s ease-out infinite
+}
+
+.particle-2 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand2 0.8s ease-out infinite 0.1s
+}
+
+.particle-3 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand3 0.8s ease-out infinite 0.2s
+}
+
+.particle-4 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand4 0.8s ease-out infinite 0.3s
+}
+
+.particle-5 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand1 0.8s ease-out infinite 0.4s
+}
+
+.particle-6 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand2 0.8s ease-out infinite 0.5s
+}
+
+.particle-7 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand3 0.8s ease-out infinite 0.6s
+}
+
+.particle-8 {
+    top: 50%;
+    left: 50%;
+    animation: particleExpand4 0.8s ease-out infinite 0.7s
+}
+
+@keyframes particleExpand1 {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: translate(-50%, -150%) scale(2);
+        opacity: 0
+    }
+}
+
+@keyframes particleExpand2 {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: translate(50%, -50%) scale(2);
+        opacity: 0
+    }
+}
+
+@keyframes particleExpand3 {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: translate(-150%, -50%) scale(2);
+        opacity: 0
+    }
+}
+
+@keyframes particleExpand4 {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: translate(-50%, 50%) scale(2);
+        opacity: 0
+    }
+}
+
+.romantic-message {
+    position: absolute;
+    bottom: -120px;
+    text-align: center;
+    animation: messagePulse 0.8s ease-in-out infinite
+}
+
+.message-text {
+    font-size: 36px;
+    color: #ff6b9d;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+    font-family: Georgia, serif
+}
+
+.message-subtext {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-style: italic;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5)
+}
+
+@keyframes messagePulse {
+
+    0%,
+    40%,
+    100% {
+        opacity: 0.9;
+        transform: scale(1)
+    }
+
+    10% {
+        opacity: 1;
+        transform: scale(1.03)
+    }
+
+    30% {
+        opacity: 1;
+        transform: scale(1.015)
+    }
+}
+
+.heartbeat-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px
+}
+
+.pulse-line {
+    width: 200px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 5px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 71, 87, 0.3)
+}
+
+.ecg-line {
+    width: 100%;
+    height: 100%
+}
+
+.ecg-line polyline {
+    animation: ecgPulse 0.8s linear infinite
+}
+
+@keyframes ecgPulse {
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(-20px)
+    }
+}
+
+.bpm-text {
+    font-size: 18px;
+    color: #ff4757;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+    animation: bpmBlink 0.8s ease-in-out infinite
+}
+
+@keyframes bpmBlink {
+
+    0%,
+    40%,
+    100% {
+        opacity: 0.7
+    }
+
+    10%,
+    30% {
+        opacity: 1
+    }
+}
+
+.heart-page-container {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #1a0000 0%, #2d0a0a 50%, #1a0000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden
+}
+
+.back-btn-heart {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    z-index: 10
+}
+
+.back-btn-heart:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-3px)
+}
+
+.mute-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    z-index: 10
+}
+
+.mute-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1)
+}
+
+.heart-scene {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1
+}

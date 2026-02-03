@@ -3,6 +3,7 @@ import Login from './Login'
 import Welcome from './Welcome'
 import Memories from './Memories'
 import ValentineSteps from './ValentineSteps'
+import HeartPage from './HeartPage'
 import './App.css'
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
     setCurrentPage('valentinesteps')
   }
 
+  const navigateToHeart = () => {
+    setCurrentPage('heart')
+  }
+
   const navigateToWelcome = () => {
     setCurrentPage('welcome')
   }
@@ -39,11 +44,14 @@ function App() {
           onLogout={handleLogout} 
           onNavigateToMemories={navigateToMemories}
           onNavigateToValentineSteps={navigateToValentineSteps}
+          onNavigateToHeart={navigateToHeart}
         />
       ) : currentPage === 'memories' ? (
         <Memories onBack={navigateToWelcome} />
       ) : currentPage === 'valentinesteps' ? (
         <ValentineSteps onBack={navigateToWelcome} />
+      ) : currentPage === 'heart' ? (
+        <HeartPage onBack={navigateToWelcome} />
       ) : null}
     </>
   )

@@ -48,11 +48,16 @@ function Login({ onLogin }) {
     
     // Simulate API call
     setTimeout(() => {
-      console.log('Login submitted:', formData)
-      setIsLoading(false)
-      setFormData({ password: '' })
-      if (onLogin) {
-        onLogin()
+      if (formData.password === 'bugdieee') {
+        console.log('Login submitted:', formData)
+        setIsLoading(false)
+        setFormData({ password: '' })
+        if (onLogin) {
+          onLogin()
+        }
+      } else {
+        setErrors({ password: 'Wrong key! Try again 💔' })
+        setIsLoading(false)
       }
     }, 1500)
   }

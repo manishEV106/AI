@@ -28,7 +28,7 @@ function HeartPage({ onBack }) {
   return (
     <div className="heart-page-container">
       <audio ref={audioRef} loop muted={isMuted}>
-        <source src="https://assets.mixkit.co/active_storage/sfx/2898/2898-preview.mp3" type="audio/mpeg" />
+        <source src="/heartbeat.mp3" type="audio/mpeg" />
       </audio>
 
       <button className="back-btn-heart" onClick={onBack}>

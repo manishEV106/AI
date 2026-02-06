@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Login from './Login'
 import Welcome from './Welcome'
 import Memories from './Memories'
@@ -7,8 +7,20 @@ import HeartPage from './HeartPage'
 import './App.css'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [currentPage, setCurrentPage] = useState('welcome')
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true'
+  })
+  const [currentPage, setCurrentPage] = useState(() => {
+    return localStorage.getItem('currentPage') || 'welcome'
+  })
+
+  useEffect(() => {
+    localStorage.setItem('isLoggedIn', isLoggedIn)
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    localStorage.setItem('currentPage', currentPage)
+  }, [currentPage])
 
   const handleLogin = () => {
     setIsLoggedIn(true)
@@ -17,6 +29,8 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false)
     setCurrentPage('welcome')
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('currentPage')
   }
 
   const navigateToMemories = () => {

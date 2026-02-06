@@ -130,9 +130,9 @@ function Welcome({ onLogout, onNavigateToMemories, onNavigateToValentineSteps, o
           <button className="secondary-btn" onClick={onNavigateToHeart}>
             💓 My Heart For You
           </button>
-          <button className="secondary-btn">
+          {/* <button className="secondary-btn">
             🎵 Our Playlist
-          </button>
+          </button> */}
           <button className="secondary-btn valentine-btn" onClick={onNavigateToValentineSteps}>
             💝 Valentine's Day Plans
           </button>

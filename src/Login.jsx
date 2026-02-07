@@ -48,7 +48,7 @@ function Login({ onLogin }) {
     
     // Simulate API call
     setTimeout(() => {
-      if (formData.password === 'bugdieee') {
+      if (formData.password === 'merijaanbugdiee') {
         console.log('Login submitted:', formData)
         setIsLoading(false)
         setFormData({ password: '' })

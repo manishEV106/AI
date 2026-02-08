@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
+import trackingService from './trackingService'
 import './ValentineSteps.css'
 
 function ValentineSteps({ onBack }) {
@@ -220,16 +222,32 @@ function ValentineSteps({ onBack }) {
     }
   ]
 
+  useEffect(() => {
+    trackingService.logAction('VALENTINE_STEPS_OPENED', { 
+      totalDays: valentineDays.length 
+    })
+  }, [])
+
   const currentDayData = valentineDays[currentDay]
 
   const goToNextDay = () => {
     if (currentDay < valentineDays.length - 1) {
+      trackingService.logAction('VALENTINE_NEXT_DAY', { 
+        from: currentDay, 
+        to: currentDay + 1,
+        day: valentineDays[currentDay + 1].day 
+      })
       setCurrentDay(currentDay + 1)
     }
   }
 
   const goToPrevDay = () => {
     if (currentDay > 0) {
+      trackingService.logAction('VALENTINE_PREV_DAY', { 
+        from: currentDay, 
+        to: currentDay - 1,
+        day: valentineDays[currentDay - 1].day 
+      })
       setCurrentDay(currentDay - 1)
     }
   }

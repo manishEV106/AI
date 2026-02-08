@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import trackingService from './trackingService'
 import './HeartPage.css'
 
 function HeartPage({ onBack }) {
@@ -6,6 +7,8 @@ function HeartPage({ onBack }) {
   const audioRef = useRef(null)
 
   useEffect(() => {
+    trackingService.logAction('HEART_PAGE_OPENED')
+    
     // Create and play heartbeat sound
     if (audioRef.current) {
       audioRef.current.play().catch(err => console.log('Audio autoplay blocked:', err))

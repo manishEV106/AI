@@ -5,6 +5,8 @@ import Memories from './Memories'
 import ValentineSteps from './ValentineSteps'
 import HeartPage from './HeartPage'
 import LoveStoryBook from './LoveStoryBook'
+import TrackingDashboard from './TrackingDashboard'
+import trackingService from './trackingService'
 import './App.css'
 
 // Version to track deployments - change this to force logout on new deployment
@@ -41,12 +43,34 @@ function App() {
     localStorage.setItem('userType', userType)
   }, [userType])
 
+  // Track app initialization
+  useEffect(() => {
+    trackingService.logAction('APP_INITIALIZED', { 
+      isLoggedIn,
+      currentPage,
+      userType 
+    })
+  }, [])
+
+  // Check if URL path is /activitytracker
+  const isActivityTrackerRoute = window.location.pathname === '/activitytracker'
+
+  // Show tracking dashboard if on /activitytracker route
+  if (isActivityTrackerRoute) {
+    return <TrackingDashboard onBack={() => {
+      window.history.pushState({}, '', '/')
+      window.location.reload()
+    }} />
+  }
+
   const handleLogin = (type) => {
     setIsLoggedIn(true)
     setUserType(type)
+    trackingService.logAction('USER_LOGIN', { userType: type })
   }
 
   const handleLogout = () => {
+    trackingService.logAction('USER_LOGOUT', { userType })
     setIsLoggedIn(false)
     setCurrentPage('welcome')
     localStorage.removeItem('isLoggedIn')
@@ -55,22 +79,27 @@ function App() {
   }
 
   const navigateToMemories = () => {
+    trackingService.logAction('NAVIGATE_TO_MEMORIES', { from: currentPage })
     setCurrentPage('memories')
   }
 
   const navigateToValentineSteps = () => {
+    trackingService.logAction('NAVIGATE_TO_VALENTINE_STEPS', { from: currentPage })
     setCurrentPage('valentinesteps')
   }
 
   const navigateToHeart = () => {
+    trackingService.logAction('NAVIGATE_TO_HEART', { from: currentPage })
     setCurrentPage('heart')
   }
 
   const navigateToLoveStory = () => {
+    trackingService.logAction('NAVIGATE_TO_LOVE_STORY', { from: currentPage })
     setCurrentPage('lovestory')
   }
 
   const navigateToWelcome = () => {
+    trackingService.logAction('NAVIGATE_TO_WELCOME', { from: currentPage })
     setCurrentPage('welcome')
   }
 

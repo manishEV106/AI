@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
+import trackingService from './trackingService'
 import './Memories.css'
 
 function Memories({ onBack, userType }) {
@@ -196,6 +197,12 @@ function Memories({ onBack, userType }) {
   const totalPages = Math.ceil(memories.length / 2)
 
   useEffect(() => {
+    trackingService.logAction('MEMORIES_OPENED', { 
+      userType,
+      totalMemories: memories.length,
+      totalPages 
+    })
+    
     if (bookRef.current) {
       gsap.set(bookRef.current, { transformStyle: 'preserve-3d' })
     }

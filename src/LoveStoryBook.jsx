@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
+import trackingService from './trackingService'
 import './LoveStoryBook.css'
 
 function LoveStoryBook({ onBack }) {
@@ -259,6 +260,11 @@ Happiness.`,
   const totalPages = Math.ceil(storyPages.length / 2)
 
   useEffect(() => {
+    trackingService.logAction('LOVE_STORY_BOOK_OPENED', { 
+      totalPages,
+      totalChapters: storyPages.length 
+    })
+    
     if (bookRef.current) {
       gsap.set(bookRef.current, { transformStyle: 'preserve-3d' })
     }
@@ -276,6 +282,11 @@ Happiness.`,
 
   const nextPage = () => {
     if (currentPage < totalPages - 1 && !isFlipping) {
+      trackingService.logAction('LOVE_STORY_NEXT_PAGE', { 
+        from: currentPage, 
+        to: currentPage + 1,
+        chapter: storyPages[currentPage + 1]?.chapter 
+      })
       setIsFlipping(true)
       
       const tl = gsap.timeline({
@@ -312,6 +323,11 @@ Happiness.`,
 
   const prevPage = () => {
     if (currentPage > 0 && !isFlipping) {
+      trackingService.logAction('LOVE_STORY_PREV_PAGE', { 
+        from: currentPage, 
+        to: currentPage - 1,
+        chapter: storyPages[currentPage - 1]?.chapter 
+      })
       setIsFlipping(true)
       
       const tl = gsap.timeline({

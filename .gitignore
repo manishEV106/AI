@@ -12,9 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Tracking data
-tracking-data.json
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

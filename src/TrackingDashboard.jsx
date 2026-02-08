@@ -12,16 +12,15 @@ function TrackingDashboard({ onBack }) {
     loadData()
   }, [])
 
-  const loadData = async () => {
-    const allLogs = await trackingService.getAllLogs()
-    const statsData = await trackingService.getStats()
+  const loadData = () => {
+    const allLogs = trackingService.getAllLogs()
     setLogs(allLogs)
-    setStats(statsData)
+    setStats(trackingService.getStats())
   }
 
-  const getFilteredLogs = async () => {
+  const getFilteredLogs = () => {
     let filtered = filter === 'current-session' 
-      ? await trackingService.getCurrentSessionLogs() 
+      ? trackingService.getCurrentSessionLogs() 
       : logs
 
     if (searchTerm) {
@@ -35,17 +34,17 @@ function TrackingDashboard({ onBack }) {
     return filtered.reverse() // Show newest first
   }
 
-  const handleExportJSON = async () => {
-    await trackingService.exportToFile()
+  const handleExportJSON = () => {
+    trackingService.exportToFile()
   }
 
-  const handleExportText = async () => {
-    await trackingService.exportToTextFile()
+  const handleExportText = () => {
+    trackingService.exportToTextFile()
   }
 
-  const handleClearLogs = async () => {
+  const handleClearLogs = () => {
     if (window.confirm('Are you sure you want to clear all tracking logs? This cannot be undone.')) {
-      await trackingService.clearLogs()
+      trackingService.clearLogs()
       loadData()
     }
   }

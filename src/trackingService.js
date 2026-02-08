@@ -1,10 +1,10 @@
 // Tracking Service - Records user actions with device information
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
-
 class TrackingService {
   constructor() {
+    this.storageKey = 'userActionTracker'
     this.deviceInfo = this.getDeviceInfo()
+    this.initializeTracking()
   }
 
   // Get device and browser information
@@ -38,9 +38,18 @@ class TrackingService {
     }
   }
 
+  // Initialize tracking storage
+  initializeTracking() {
+    if (!localStorage.getItem(this.storageKey)) {
+      localStorage.setItem(this.storageKey, JSON.stringify([]))
+    }
+  }
+
   // Log an action
-  async logAction(action, details = {}) {
+  logAction(action, details = {}) {
     try {
+      const trackingData = JSON.parse(localStorage.getItem(this.storageKey) || '[]')
+      
       const logEntry = {
         timestamp: new Date().toISOString(),
         date: new Date().toLocaleString(),
@@ -51,20 +60,11 @@ class TrackingService {
         sessionId: this.getSessionId()
       }
 
-      const response = await fetch(`${API_URL}/api/tracking/log`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(logEntry)
-      })
+      trackingData.push(logEntry)
+      localStorage.setItem(this.storageKey, JSON.stringify(trackingData))
 
-      if (!response.ok) {
-        throw new Error('Failed to log action')
-      }
-
-      const result = await response.json()
-      console.log('📊 Tracking:', action, details, result)
+      // Also log to console for development
+      console.log('📊 Tracking:', action, details, 'Total logs:', trackingData.length)
     } catch (error) {
       console.error('❌ Tracking failed:', error)
     }
@@ -81,22 +81,13 @@ class TrackingService {
   }
 
   // Get all tracked data
-  async getAllLogs() {
-    try {
-      const response = await fetch(`${API_URL}/api/tracking/logs`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch logs')
-      }
-      return await response.json()
-    } catch (error) {
-      console.error('❌ Failed to get logs:', error)
-      return []
-    }
+  getAllLogs() {
+    return JSON.parse(localStorage.getItem(this.storageKey) || '[]')
   }
 
   // Export tracking data to downloadable file
-  async exportToFile() {
-    const logs = await this.getAllLogs()
+  exportToFile() {
+    const logs = this.getAllLogs()
     const dataStr = JSON.stringify(logs, null, 2)
     const blob = new Blob([dataStr], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
@@ -110,8 +101,8 @@ class TrackingService {
   }
 
   // Export to formatted text file
-  async exportToTextFile() {
-    const logs = await this.getAllLogs()
+  exportToTextFile() {
+    const logs = this.getAllLogs()
     let textContent = '=== USER ACTIVITY TRACKING LOG ===\n\n'
     
     logs.forEach((log, index) => {
@@ -138,45 +129,31 @@ class TrackingService {
   }
 
   // Get statistics
-  async getStats() {
-    try {
-      const response = await fetch(`${API_URL}/api/tracking/stats`)
-      if (!response.ok) {
-        throw new Error('Failed to fetch stats')
-      }
-      return await response.json()
-    } catch (error) {
-      console.error('❌ Failed to get stats:', error)
-      return {
-        totalActions: 0,
-        uniqueSessions: 0,
-        devices: [],
-        actionTypes: {}
-      }
+  getStats() {
+    const logs = this.getAllLogs()
+    const stats = {
+      totalActions: logs.length,
+      uniqueSessions: [...new Set(logs.map(l => l.sessionId))].length,
+      devices: [...new Set(logs.map(l => l.device))],
+      actionTypes: {}
     }
+
+    logs.forEach(log => {
+      stats.actionTypes[log.action] = (stats.actionTypes[log.action] || 0) + 1
+    })
+
+    return stats
   }
 
   // Clear all tracking data
-  async clearLogs() {
-    try {
-      const response = await fetch(`${API_URL}/api/tracking/logs`, {
-        method: 'DELETE'
-      })
-      if (!response.ok) {
-        throw new Error('Failed to clear logs')
-      }
-      return await response.json()
-    } catch (error) {
-      console.error('❌ Failed to clear logs:', error)
-      return { success: false }
-    }
+  clearLogs() {
+    localStorage.setItem(this.storageKey, JSON.stringify([]))
   }
 
   // Get logs for current session
-  async getCurrentSessionLogs() {
+  getCurrentSessionLogs() {
     const sessionId = this.getSessionId()
-    const allLogs = await this.getAllLogs()
-    return allLogs.filter(log => log.sessionId === sessionId)
+    return this.getAllLogs().filter(log => log.sessionId === sessionId)
   }
 }
 

@@ -8,19 +8,17 @@ import LoveStoryBook from './LoveStoryBook'
 import './App.css'
 
 // Version to track deployments - change this to force logout on new deployment
-const APP_VERSION = '1.0.0'
+const APP_VERSION = '3.0.0'
+
+// Check version before component renders
+const storedVersion = localStorage.getItem('appVersion')
+if (!storedVersion || storedVersion !== APP_VERSION) {
+  // Clear all stored data on new deployment or first visit
+  localStorage.clear()
+  localStorage.setItem('appVersion', APP_VERSION)
+}
 
 function App() {
-  // Check version and clear localStorage if it's a new deployment
-  useEffect(() => {
-    const storedVersion = localStorage.getItem('appVersion')
-    if (!storedVersion || storedVersion !== APP_VERSION) {
-      // Clear all stored data on new deployment or first visit
-      localStorage.clear()
-      localStorage.setItem('appVersion', APP_VERSION)
-    }
-  }, [])
-
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true'
   })

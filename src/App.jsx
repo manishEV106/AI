@@ -7,7 +7,20 @@ import HeartPage from './HeartPage'
 import LoveStoryBook from './LoveStoryBook'
 import './App.css'
 
+// Version to track deployments - change this to force logout on new deployment
+const APP_VERSION = '1.0.0'
+
 function App() {
+  // Check version and clear localStorage if it's a new deployment
+  useEffect(() => {
+    const storedVersion = localStorage.getItem('appVersion')
+    if (storedVersion !== APP_VERSION) {
+      // Clear all stored data on new deployment
+      localStorage.clear()
+      localStorage.setItem('appVersion', APP_VERSION)
+    }
+  }, [])
+
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true'
   })

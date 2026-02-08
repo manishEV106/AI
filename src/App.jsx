@@ -14,8 +14,8 @@ function App() {
   // Check version and clear localStorage if it's a new deployment
   useEffect(() => {
     const storedVersion = localStorage.getItem('appVersion')
-    if (storedVersion !== APP_VERSION) {
-      // Clear all stored data on new deployment
+    if (!storedVersion || storedVersion !== APP_VERSION) {
+      // Clear all stored data on new deployment or first visit
       localStorage.clear()
       localStorage.setItem('appVersion', APP_VERSION)
     }

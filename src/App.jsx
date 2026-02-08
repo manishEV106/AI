@@ -15,8 +15,17 @@ const APP_VERSION = '3.0.0'
 // Check version before component renders
 const storedVersion = localStorage.getItem('appVersion')
 if (!storedVersion || storedVersion !== APP_VERSION) {
+  // Preserve tracking data before clearing
+  const trackingData = localStorage.getItem('userActionTracker')
+  
   // Clear all stored data on new deployment or first visit
   localStorage.clear()
+  
+  // Restore tracking data
+  if (trackingData) {
+    localStorage.setItem('userActionTracker', trackingData)
+  }
+  
   localStorage.setItem('appVersion', APP_VERSION)
 }
 

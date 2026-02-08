@@ -47,23 +47,27 @@ class TrackingService {
 
   // Log an action
   logAction(action, details = {}) {
-    const trackingData = JSON.parse(localStorage.getItem(this.storageKey) || '[]')
-    
-    const logEntry = {
-      timestamp: new Date().toISOString(),
-      date: new Date().toLocaleString(),
-      action: action,
-      details: details,
-      device: this.deviceInfo.deviceName,
-      deviceInfo: this.deviceInfo,
-      sessionId: this.getSessionId()
+    try {
+      const trackingData = JSON.parse(localStorage.getItem(this.storageKey) || '[]')
+      
+      const logEntry = {
+        timestamp: new Date().toISOString(),
+        date: new Date().toLocaleString(),
+        action: action,
+        details: details,
+        device: this.deviceInfo.deviceName,
+        deviceInfo: this.deviceInfo,
+        sessionId: this.getSessionId()
+      }
+
+      trackingData.push(logEntry)
+      localStorage.setItem(this.storageKey, JSON.stringify(trackingData))
+
+      // Also log to console for development
+      console.log('📊 Tracking:', action, details, 'Total logs:', trackingData.length)
+    } catch (error) {
+      console.error('❌ Tracking failed:', error)
     }
-
-    trackingData.push(logEntry)
-    localStorage.setItem(this.storageKey, JSON.stringify(trackingData))
-
-    // Also log to console for development
-    console.log('📊 Tracking:', action, details)
   }
 
   // Get or create session ID

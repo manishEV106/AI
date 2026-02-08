@@ -74,6 +74,22 @@
   margin-bottom: 15px;
 }
 
+.device-info-debug {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.device-info-debug p {
+  margin: 8px 0;
+}
+
+.device-info-debug strong {
+  color: rgba(255, 255, 255, 0.9);
+  margin-right: 8px;
+}
+
 .action-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

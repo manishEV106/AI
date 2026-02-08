@@ -50,6 +50,9 @@ function TrackingDashboard({ onBack }) {
   }
 
   const filteredLogs = getFilteredLogs()
+  
+  // Get current device info for debugging
+  const currentDevice = trackingService.deviceInfo
 
   return (
     <div className="tracking-dashboard">
@@ -72,6 +75,17 @@ function TrackingDashboard({ onBack }) {
         <div className="stat-card">
           <div className="stat-value">{stats.devices?.length || 0}</div>
           <div className="stat-label">Devices</div>
+        </div>
+      </div>
+
+      <div className="action-types">
+        <h3>Current Device Info</h3>
+        <div className="device-info-debug">
+          <p><strong>Device:</strong> {currentDevice.deviceName}</p>
+          <p><strong>OS:</strong> {currentDevice.os}</p>
+          <p><strong>Browser:</strong> {currentDevice.browser}</p>
+          <p><strong>Screen:</strong> {currentDevice.screenResolution}</p>
+          <p><strong>Origin:</strong> {window.location.origin}</p>
         </div>
       </div>
 

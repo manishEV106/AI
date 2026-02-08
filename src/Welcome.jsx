@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Welcome.css'
 
-function Welcome({ onLogout, onNavigateToMemories, onNavigateToValentineSteps, onNavigateToHeart }) {
+function Welcome({ onLogout, onNavigateToMemories, onNavigateToValentineSteps, onNavigateToHeart, onNavigateToLoveStory, userType }) {
   const [showMessage, setShowMessage] = useState(false)
   const [currentTime, setCurrentTime] = useState(new Date())
 
@@ -127,6 +127,11 @@ function Welcome({ onLogout, onNavigateToMemories, onNavigateToValentineSteps, o
           <button className="primary-btn" onClick={onNavigateToMemories}>
             📷 View Our Memories
           </button>
+          {userType === 'bugdieee266' && (
+            <button className="secondary-btn" onClick={onNavigateToLoveStory}>
+              📖 Our Love Story Book
+            </button>
+          )}
           <button className="secondary-btn" onClick={onNavigateToHeart}>
             💓 My Heart For You
           </button>

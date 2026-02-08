@@ -191,7 +191,7 @@ function Memories({ onBack, userType }) {
     }
   ]
 
-  const memories = userType === 'bugdieee' ? memoriesSet1 : memoriesSet2
+  const memories = userType === 'bugdieee266' ? memoriesSet1 : memoriesSet2
 
   const totalPages = Math.ceil(memories.length / 2)
 

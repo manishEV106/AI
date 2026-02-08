@@ -9,7 +9,6 @@ function TrackingDashboard({ onBack }) {
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
-    trackingService.logAction('VIEW_TRACKING_DASHBOARD')
     loadData()
   }, [])
 
@@ -37,18 +36,15 @@ function TrackingDashboard({ onBack }) {
 
   const handleExportJSON = () => {
     trackingService.exportToFile()
-    trackingService.logAction('EXPORT_TRACKING_JSON')
   }
 
   const handleExportText = () => {
     trackingService.exportToTextFile()
-    trackingService.logAction('EXPORT_TRACKING_TEXT')
   }
 
   const handleClearLogs = () => {
     if (window.confirm('Are you sure you want to clear all tracking logs? This cannot be undone.')) {
       trackingService.clearLogs()
-      trackingService.logAction('CLEAR_TRACKING_LOGS')
       loadData()
     }
   }

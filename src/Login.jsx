@@ -48,10 +48,17 @@ function Login({ onLogin }) {
     
     // Simulate API call
     setTimeout(() => {
-      if (formData.password === 'merijaanbugdiee' || formData.password === 'bugdieee266') {
+      if (formData.password === 'merijaanbugdiee' || formData.password === 'bugdieee266' || formData.password === 'admin') {
         console.log('Login submitted:', formData)
         setIsLoading(false)
-        const userType = formData.password === 'merijaanbugdiee' ? 'merijaanbugdiee' : 'bugdieee266'
+        let userType
+        if (formData.password === 'merijaanbugdiee') {
+          userType = 'merijaanbugdiee'
+        } else if (formData.password === 'bugdieee266') {
+          userType = 'bugdieee266'
+        } else if (formData.password === 'admin') {
+          userType = 'admin'
+        }
         setFormData({ password: '' })
         if (onLogin) {
           onLogin(userType)

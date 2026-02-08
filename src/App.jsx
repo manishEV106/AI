@@ -45,11 +45,14 @@ function App() {
 
   // Track app initialization
   useEffect(() => {
-    trackingService.logAction('APP_INITIALIZED', { 
-      isLoggedIn,
-      currentPage,
-      userType 
-    })
+    // Don't track if admin user
+    if (userType !== 'admin') {
+      trackingService.logAction('APP_INITIALIZED', { 
+        isLoggedIn,
+        currentPage,
+        userType 
+      })
+    }
   }, [])
 
   // Check if URL path is /activitytracker
@@ -66,11 +69,17 @@ function App() {
   const handleLogin = (type) => {
     setIsLoggedIn(true)
     setUserType(type)
-    trackingService.logAction('USER_LOGIN', { userType: type })
+    // Don't track admin login
+    if (type !== 'admin') {
+      trackingService.logAction('USER_LOGIN', { userType: type })
+    }
   }
 
   const handleLogout = () => {
-    trackingService.logAction('USER_LOGOUT', { userType })
+    // Don't track admin logout
+    if (userType !== 'admin') {
+      trackingService.logAction('USER_LOGOUT', { userType })
+    }
     setIsLoggedIn(false)
     setCurrentPage('welcome')
     localStorage.removeItem('isLoggedIn')
@@ -101,6 +110,11 @@ function App() {
   const navigateToWelcome = () => {
     trackingService.logAction('NAVIGATE_TO_WELCOME', { from: currentPage })
     setCurrentPage('welcome')
+  }
+
+  // Show tracking dashboard for admin users
+  if (isLoggedIn && userType === 'admin') {
+    return <TrackingDashboard onBack={handleLogout} />
   }
 
   return (

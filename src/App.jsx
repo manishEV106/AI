@@ -13,6 +13,9 @@ function App() {
   const [currentPage, setCurrentPage] = useState(() => {
     return localStorage.getItem('currentPage') || 'welcome'
   })
+  const [userType, setUserType] = useState(() => {
+    return localStorage.getItem('userType') || 'merijaanbugdiee'
+  })
 
   useEffect(() => {
     localStorage.setItem('isLoggedIn', isLoggedIn)
@@ -22,8 +25,13 @@ function App() {
     localStorage.setItem('currentPage', currentPage)
   }, [currentPage])
 
-  const handleLogin = () => {
+  useEffect(() => {
+    localStorage.setItem('userType', userType)
+  }, [userType])
+
+  const handleLogin = (type) => {
     setIsLoggedIn(true)
+    setUserType(type)
   }
 
   const handleLogout = () => {
@@ -31,6 +39,7 @@ function App() {
     setCurrentPage('welcome')
     localStorage.removeItem('isLoggedIn')
     localStorage.removeItem('currentPage')
+    localStorage.removeItem('userType')
   }
 
   const navigateToMemories = () => {
@@ -61,7 +70,7 @@ function App() {
           onNavigateToHeart={navigateToHeart}
         />
       ) : currentPage === 'memories' ? (
-        <Memories onBack={navigateToWelcome} />
+        <Memories onBack={navigateToWelcome} userType={userType} />
       ) : currentPage === 'valentinesteps' ? (
         <ValentineSteps onBack={navigateToWelcome} />
       ) : currentPage === 'heart' ? (
